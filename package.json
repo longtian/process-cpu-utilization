@@ -1,0 +1,36 @@
+{
+  "name": "process-cpu-utilization",
+  "version": "1.0.0",
+  "description": "show process's cpu utilization by executing ps shell command",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules/.bin/mocha",
+    "test-ci": "./node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha --report lcovonly  -- --reporter dot test/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wyvernnot/process-cpu-utilization.git"
+  },
+  "os": ["!win32"],
+  "keywords": [
+    "process",
+    "cpu",
+    "utilization",
+    "ps"
+  ],
+  "author": "wyvernnot <wyvernnot@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wyvernnot/process-cpu-utilization/issues"
+  },
+  "homepage": "https://github.com/wyvernnot/process-cpu-utilization",
+  "devDependencies": {
+    "mocha": "1.21.5",
+    "istanbul": "0.2.16"
+  },
+  "files": [
+    "index.js",
+    "README.md",
+    "LICENSE"
+  ]
+}
