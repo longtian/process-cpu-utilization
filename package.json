@@ -1,6 +1,6 @@
 {
   "name": "process-cpu-utilization",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "show process's cpu utilization by executing ps shell command",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,9 @@
     "type": "git",
     "url": "https://github.com/wyvernnot/process-cpu-utilization.git"
   },
-  "os": ["!win32"],
+  "os": [
+    "!win32"
+  ],
   "keywords": [
     "process",
     "cpu",
