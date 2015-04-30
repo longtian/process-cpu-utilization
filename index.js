@@ -7,8 +7,11 @@ var SPECIFIERS = {};
 var _ready = false;
 var _beforeReady = [];
 var PID = process.pid;
+var PROCESSOR_COUNT = require('os').cpus().length;
 
 /**
+ * get `ps` version
+ *
  * @throw Error if ps command not found
  */
 function gatherVersion() {
@@ -22,7 +25,7 @@ function gatherVersion() {
 }
 
 /**
- * fill in the SPECIFIERS
+ * fill in `ps` SPECIFIERS, so they can be used to check illegal specifier
  *
  * @throw Error if `ps L` meets error
  */
@@ -39,7 +42,7 @@ function gatherSpecifiers() {
                 SPECIFIERS[tuple[0]] = tuple[1];
             }
         });
-
+        module.exports.ps.SPECIFIERS = SPECIFIERS;
         _ready = true;
         _beforeReady.forEach(function (func) {
             func.call();
@@ -89,7 +92,7 @@ function buildCommand(untrusted) {
 function buildFunction(options, cb) {
     return function () {
         require('child_process').exec(buildCommand(options), function (err, data) {
-            cb(err, processResult(data, escape(options)));
+            cb(err, processResult(data, escape(options), cb));
         });
     }
 }
@@ -101,13 +104,13 @@ function buildFunction(options, cb) {
  * @param specifiers {Array} trusted specifiers
  * @returns {Object}
  */
-function processResult(data, specifiers) {
+function processResult(data, specifiers, cb) {
     var parts = data.trim().split(/\s+/);
     if (parts.length !== specifiers.length) {
         var error = new Error('PS command result mismatch');
         error.expected = specifiers.length;
         error.actual = parts.length;
-        throw error;
+        cb.call(error);
     }
     var result = {};
     for (var i = 0; i < specifiers.length; i++) {
@@ -117,6 +120,7 @@ function processResult(data, specifiers) {
 }
 
 /**
+ *
  * @param options
  * @param cb
  */
@@ -133,8 +137,24 @@ gatherVersion();
 
 module.exports = {
     ps: {
-        version: 'N/A'
+        version: 'N/A',
+        SPECIFIERS: {}
     },
-    get: get
+    get: get,
+    ready: function (cb) {
+        if (_ready) {
+            cb.call();
+        } else {
+            _beforeReady.push(cb);
+        }
+    },
+    cpu: function (cb) {
+        get(['cp'], function (err, data) {
+            if (err) {
+                cb(err);
+            }
+            cb(null, parseInt(data['cp'], 10) / PROCESSOR_COUNT / 10);
+        })
+    }
 }
 

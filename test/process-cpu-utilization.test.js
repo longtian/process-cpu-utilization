@@ -13,4 +13,21 @@ describe('Process-cpu-utilization', function () {
             done();
         });
     });
+    it('should work for virtual memory size', function (done) {
+        pcu.get(['vsize'], function (err, data) {
+            done();
+        });
+    });
+    it('should work for virtual memory size', function (done) {
+        pcu.get(['vsize'], function (err, data) {
+            done();
+        });
+    });
+
+    it('should work for CPU', function (done) {
+        pcu.cpu(function (err, percentage) {
+            console.log(arguments);
+            done();
+        });
+    });
 });

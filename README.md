@@ -9,6 +9,18 @@ The solution is based on `PS` command
 [![Test Coverage][coveralls-image]][coveralls-url]
 
 ## Sample Code
+
+## `.cpu(err,value)`
+
+```javascript
+var pcu=require('process-cpu-utilization');
+pcu.cpu(function(err,value){
+ console.log('CPU Usage of this process is %d %% across all processors', value);
+});
+```
+
+## `.get([Specifier Array],callback)`
+ 
 ```javascript
 var pcu=require('process-cpu-utilization');
 pcu.get(['%cpu'],function(err,data){
