@@ -7,6 +7,7 @@ The solution is based on `PS` command
 [![NPM Downloads][downloads-image]][downloads-url]
 [![Linux Build][travis-image]][travis-url]
 [![Test Coverage][coveralls-image]][coveralls-url]
+![Versions](https://david-dm.org/wyvernnot/process-cpu-utilization.svg)
 
 ## Sample Code
 
